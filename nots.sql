@@ -43,8 +43,22 @@ UPDATE [table_name] set col_name=value ,col_name="value",col_name="value" where 
 
 DELETE from [table_name] where  idOr[col_name]=?;
 
---ALEAS IN SQL -------------------------------------------------------------------------------------------------
+--ALEAS IN SQL 
 
 select [col_name] "[your_colname]"  from [table_name] s --where s is alias 
 
+--where 
 
+select * from students where 1d =?;
+
+--OR ,AND clause
+
+select * from [table_name] where id=?AND name=?;
+select * from [table_name] where id=?OR name=?;
+
+--NOT
+
+
+-- ORDER BY-----------------------------------------------------------------------------------------------------
+
+select * from [table_name] ORDER BY [col_name] asc&desc;
