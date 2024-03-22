@@ -1,8 +1,8 @@
 show databasas;
 -- to create a database---------------------------------------------------------------------------------------------------------
-create databasas[dbname];
+create database[dbname];
 --to delete a database----------------------------------------------------------------------------------------------------------
-drop databasas[dbname];
+drop database[dbname];
 --for swiching database---------------------------------------------------------------------------------------------------------
 use [dbname];
 --create table------------------------------------------------------------------------------------------------------------------
@@ -62,3 +62,24 @@ select * from [table_name] where id=?OR name=?;
 -- ORDER BY-----------------------------------------------------------------------------------------------------
 
 select * from [table_name] ORDER BY [col_name] asc&desc;
+
+
+SQL funtion-----------------------------------------------------------------------------
+
+1.length  
+select length("amresh gupta")  as "akg" ;
+
+2.concatenate
+ concatenate(str,str)
+
+3.
+LCASE(str);
+
+substring (str,start,length) extrct part of the string ;
+
+4. TRIM(str) remove leading and trailing space ;
+
+5.REVERSE    reverse the string ;
+
+6. STRCMP(str1,str2) compare two string 
+
