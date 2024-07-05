@@ -7,8 +7,8 @@ drop database [dbname];
 --for swiching database---------------------------------------------------------------------------------------------------------
 use [dbname];
 --create table------------------------------------------------------------------------------------------------------------------
-create table[table_name](col1 colType(size) extra);
-create table student(Id int,FirstName varchar(255),LastName varchar(255),phone_no varchar(255),Address varchar(255),City varch
+create table [table_name] (col1 colType(size) extra);
+create table student(Id int primary key,FirstName varchar(255),LastName varchar(255),phone_no varchar(255),Address varchar(255),City varch
 ar(255));
 --delete table-----------------------------------------------------------------------------------------------------------------
 drop table [table_name];
@@ -21,10 +21,13 @@ desc [table_name];
 --Table Alter --------------------------------------------------------------------------------------------------------------------
 --Add Column
 alter table [table_name] ADD phone [Data_Type];
+mysql> alter table mobiles add Price int;
 --modify column--------------------------------------------------------------------------------------------------------------------
 alter table [table_name] modify phone varchar(20) not null;
 alter table [table_name] rename[old_col_name] to [new_col_name];
+
 --Drop column----------------------------------------------------------------------------------------------------------------------
+
 alter table  [table_name] DROP  Column [col_name]   
 
 -- insert data to table-------------------------------------------------------------------------------------------------------------
@@ -51,10 +54,11 @@ select * from student ;
 
 --UPDATE---------------------------------------------------------------------------------------------------------------------------
 UPDATE [table_name] set col_name=value ,col_name="value",col_name="value" where id= value;
+UPDATE student SET Id = 4 WHERE FirstName = 'Dharmesh Kumar';
 --DELETE----------------------------------------------------------------------------------------------------------------------------
 DELETE from [table_name] where  idOr[col_name]=?;
- delete from student where FirstName="Amresh";
- delete from student where Id=1;
+delete from student where FirstName="Amresh";
+delete from student where Id=1;
 --ALEAS IN SQL 
 
 select [col_name] "[your_colname]"  from [table_name] s --where s is alias 
@@ -74,8 +78,7 @@ select * from [table_name] where id=?OR name=?;
 
 select * from [table_name] ORDER BY [col_name] asc&desc;
 
-
-SQL String funtion-----------------------------------------------------------------------------
+SQL String funtion-----------------------------------------------------------------------------------------------
 
 1.length  
 select length("amresh gupta")  as "akg" ;
@@ -197,3 +200,35 @@ mysql> select * from student where Id IN(1,2);
 2. _ -- we use for single character
 
 select * from student where FirstName LIKE'_m%';
+select * from student where Name LIKE'%Kumar%'; --it return me all name with exist Kumar not matter left and right
+
+select * from student where FirstName Like'%Kumar%';
++------+----------------+----------+-------------+-----------+-------+
+| Id   | FirstName      | LastName | phone_no    | Address   | City  |
++------+----------------+----------+-------------+-----------+-------+
+|    3 | Dharmesh Kumar | Gupta    | 87.3.0.38.3 | Sector 61 | Noida |
+|    3 | Ramesh Kumar   | Gupta    | 63.7.9.08.5 | Sector 61 | Noida |
++------+----------------+----------+-------------+-----------+-------+
+
+
+
+--Create forign key-----------------------------------------------------------------------------------------------
+create TABLE [mobiles] (Mid int primary key,Modal varchar(100) not null,Name varchar(100),Price varchar(100),sId int, FOREIGN KEY(sId) REFERENCES student(Id));
+
+--Constraints---------------------------------------------------------------------------------------------------
+-- add constraints
+
+ALTER TABLE student ADD CONSTRAINT student PRIMARY KEY (Id);
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| Id        | int          | NO   | PRI | NULL    |       |
+| FirstName | varchar(255) | YES  |     | NULL    |       |
+| LastName  | varchar(255) | YES  |     | NULL    |       |
+| phone_no  | varchar(255) | YES  |     | NULL    |       |
+| Address   | varchar(255) | YES  |     | NULL    |       |
+| City      | varchar(255) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+
+ALTER TABLE [table_name] ADD FOREIGN KEY  (this_colum_name) REFERENCES [parent_tablr_name](parant_primary_key_colun);
+alter table mobiles ADD foreign key(sId) REFERENCES student(Id);
