@@ -206,7 +206,7 @@ select * from student where FirstName Like'%Kumar%';
 +------+----------------+----------+-------------+-----------+-------+
 | Id   | FirstName      | LastName | phone_no    | Address   | City  |
 +------+----------------+----------+-------------+-----------+-------+
-|    3 | Dharmesh Kumar | Gupta    | 87.3.0.38.3 | Sector 61 | Noida |
+|    4 | Dharmesh Kumar | Gupta    | 87.3.0.38.3 | Sector 61 | Noida |
 |    3 | Ramesh Kumar   | Gupta    | 63.7.9.08.5 | Sector 61 | Noida |
 +------+----------------+----------+-------------+-----------+-------+
 
