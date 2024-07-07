@@ -216,6 +216,7 @@ select * from student where FirstName Like'%Kumar%';
 create TABLE [mobiles] (Mid int primary key,Modal varchar(100) not null,Name varchar(100),Price varchar(100),sId int, FOREIGN KEY(sId) REFERENCES student(Id));
 
 create table qualifications(qId int primary key auto_increment,pass_year int not null,Name varchar (500) not null,about varchar (200),sId int,FOREIGN KEY (sId) REFERENCES student(Id));
+desc qualifications;
 +-----------+--------------+------+-----+---------+----------------+
 | Field     | Type         | Null | Key | Default | Extra          |
 +-----------+--------------+------+-----+---------+----------------+
@@ -225,6 +226,7 @@ create table qualifications(qId int primary key auto_increment,pass_year int not
 | about     | varchar(200) | YES  |     | NULL    |                |
 | sId       | int          | YES  | MUL | NULL    |                |
 +-----------+--------------+------+-----+---------+----------------+
+
 
 --Constraints---------------------------------------------------------------------------------------------------
 -- add constraints
@@ -243,4 +245,26 @@ ALTER TABLE student ADD CONSTRAINT student PRIMARY KEY (Id);
 
 ALTER TABLE [table_name] ADD FOREIGN KEY  (this_colum_name) REFERENCES [parent_tablr_name](parant_primary_key_colun);
 alter table mobiles ADD foreign key(sId) REFERENCES student(Id);
---this
+
+--JOIN----------------------------------------------------------------------------------------------------------
+--Simple JOIN
+select student.FirstName,student.phone_no,mobiles.Company_Name,mobiles.Modal from student ,mobiles WHERE student.Id=mobiles.sId;
+select s.FirstName,s.phone_no,m.Company_Name,m.Modal from student s INNER JOIN mobiles m ON s.Id=m.sId;--By Using Alias
+ +----------------+-------------+--------------+---------+
+| FirstName      | phone_no    | Company_Name | Modal   |
++----------------+-------------+--------------+---------+
+| M_A            | 9.23.3.5.0  | Mi           | 344320  |
+| Amresh         | 9598920855  | Vevo         | 1332432 |
+| Amresh         | 9598920855  | Mi           | 133208  |
+| Dharmesh Kumar | 87.3.0.38.3 | Apple        | 3442321 |
++----------------+-------------+--------------+---------+
+
+--INNER JOIN 
+ select s.FirstName,s.phone_no,m.Company_Name,m.Modal from student s INNER JOIN mobiles m ON s.Id=m.sId AND s.FirstName="Amresh
+";
++-----------+------------+--------------+---------+
+| FirstName | phone_no   | Company_Name | Modal   |
++-----------+------------+--------------+---------+
+| Amresh    | 9598920855 | Vevo         | 1332432 |
+| Amresh    | 9598920855 | Mi           | 133208  |
++-----------+------------+--------------+---------+
