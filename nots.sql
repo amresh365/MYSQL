@@ -1,4 +1,5 @@
 mysql -u root -p
+\s --use For server and database information
 show databases;
 -- to create a database---------------------------------------------------------------------------------------------------------
 create database [dbname];
@@ -8,8 +9,7 @@ drop database [dbname];
 use [dbname];
 --create table------------------------------------------------------------------------------------------------------------------
 create table [table_name] (col1 colType(size) extra);
-create table student(Id int primary key,FirstName varchar(255),LastName varchar(255),phone_no varchar(255),Address varchar(255),City varch
-ar(255));
+create table student(Id int primary key,FirstName varchar(255),LastName varchar(255),phone_no varchar(255),Address varchar(255),City varchar(255));
 --delete table-----------------------------------------------------------------------------------------------------------------
 drop table [table_name];
 DROP TABLE my_future;
@@ -212,8 +212,19 @@ select * from student where FirstName Like'%Kumar%';
 
 
 
---Create forign key-----------------------------------------------------------------------------------------------
+--Create Table with forign key-----------------------------------------------------------------------------------------------
 create TABLE [mobiles] (Mid int primary key,Modal varchar(100) not null,Name varchar(100),Price varchar(100),sId int, FOREIGN KEY(sId) REFERENCES student(Id));
+
+create table qualifications(qId int primary key auto_increment,pass_year int not null,Name varchar (500) not null,about varchar (200),sId int,FOREIGN KEY (sId) REFERENCES student(Id));
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| qId       | int          | NO   | PRI | NULL    | auto_increment |
+| pass_year | int          | NO   |     | NULL    |                |
+| Name      | varchar(500) | NO   |     | NULL    |                |
+| about     | varchar(200) | YES  |     | NULL    |                |
+| sId       | int          | YES  | MUL | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
 
 --Constraints---------------------------------------------------------------------------------------------------
 -- add constraints
@@ -232,3 +243,76 @@ ALTER TABLE student ADD CONSTRAINT student PRIMARY KEY (Id);
 
 ALTER TABLE [table_name] ADD FOREIGN KEY  (this_colum_name) REFERENCES [parent_tablr_name](parant_primary_key_colun);
 alter table mobiles ADD foreign key(sId) REFERENCES student(Id);
+
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| mId          | int          | NO   | PRI | NULL    |       |
+| Modal        | varchar(50)  | NO   |     | NULL    |       |
+| Company_Name | varchar(100) | YES  |     | NULL    |       |
+| Price        | int          | YES  |     | NULL    |       |
+| sId          | int          | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+
+--Here we Inserting data in mobiles table
+
+insert into mobiles values(234,"344320","Mi","10000",1),(365,"133208","Mi",12000,2);
+mysql> select * from mobiles;
++-----+--------+--------------+-------+------+
+| mId | Modal  | Company_Name | Price | sId  |
++-----+--------+--------------+-------+------+
+| 234 | 344320 | Mi           | 10000 |    1 |
+| 365 | 133208 | Mi           | 12000 |    2 |
++-----+--------+--------------+-------+------+
+
+insert into mobiles values(231,"3442321","Apple","10000",4),(363,"1332432","Vevo",14000,2);
+select * from mobiles;
++-----+---------+--------------+-------+------+
+| mId | Modal   | Company_Name | Price | sId  |
++-----+---------+--------------+-------+------+
+| 231 | 3442321 | Apple        | 10000 |    4 |
+| 234 | 344320  | Mi           | 10000 |    1 |
+| 363 | 1332432 | Vevo         | 14000 |    2 |
+| 365 | 133208  | Mi           | 12000 |    2 |
++-----+---------+--------------+-------+------+
+
+--drop Constraints----------------------------------------------------------------------------------------------------------------------
+ALTER [table_name] DROP FOREIGN KEY [Constraints_Name]
+
+--JOIN  when we have to fetch data from multiple table--------------------------------------------------------------------------------
+
+--Normal JOIN
+--we have two table student & mobiles
+ select student.FirstName,student.phone_no,mobiles.Company_Name,mobiles.Modal from student ,mobiles WHERE student.Id=mobiles.sId;
+ --We can Also use Alias
+ select s.FirstName,s.phone_no,m.Company_Name,m.Modal from student s,mobiles m WHERE s.Id=m.sId;
+
++----------------+-------------+--------------+---------+
+| FirstName      | phone_no    | Company_Name | Modal   |
++----------------+-------------+--------------+---------+
+| M_A            | 9.23.3.5.0  | Mi           | 344320  |
+| Amresh         | 9598920855  | Vevo         | 1332432 |
+| Amresh         | 9598920855  | Mi           | 133208  |
+| Dharmesh Kumar | 87.3.0.38.3 | Apple        | 3442321 |
++----------------+-------------+--------------+---------+
+
+--INNER JOIN || EQUI JOIN both result are same
+
+select s.FirstName,s.phone_no,m.Company_Name,m.Modal from student s INNER JOIN mobiles m ON s.Id=m.sId;
++----------------+-------------+--------------+---------+
+| FirstName      | phone_no    | Company_Name | Modal   |
++----------------+-------------+--------------+---------+
+| M_A            | 9.23.3.5.0  | Mi           | 344320  |
+| Amresh         | 9598920855  | Vevo         | 1332432 |
+| Amresh         | 9598920855  | Mi           | 133208  |
+| Dharmesh Kumar | 87.3.0.38.3 | Apple        | 3442321 |
++----------------+-------------+--------------+---------+
+
+select s.FirstName,s.phone_no,m.Company_Name,m.Modal from student s INNER JOIN mobiles m ON s.Id=m.sId AND s.FirstName=Amresh;
++-----------+------------+--------------+---------+
+| FirstName | phone_no   | Company_Name | Modal   |
++-----------+------------+--------------+---------+
+| Amresh    | 9598920855 | Vevo         | 1332432 |
+| Amresh    | 9598920855 | Mi           | 133208  |
++-----------+------------+--------------+---------+
+
